@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="/css/style.css" />
+
+</head>
+<body>
+    <div class="frame">
+        <div class="overlap-wrapper">
+            <div class="overlap">
+                <div class="text-wrapper">Sign up</div>
+                <div class="rectangle"></div>
+                <div class="input-container">
+                    <input type="text" class="input-field" placeholder="ID">
+                    <span class="warning" id="id-warning" style="display: none;">*</span>
+                </div>
+                <div class="input-container">
+                    <input type="text" class="input-field" placeholder="Name">
+                    <span class="warning" id="name-warning" style="display: none;">*</span>
+                </div>
+                <div class="input-container">
+                    <input type="email" class="input-field" placeholder="Email">
+                    <span class="warning" id="email-warning" style="display: none;">*</span>
+                </div>
+                <div class="input-container">
+                    <input type="password" class="input-field" placeholder="Password">
+                    <span class="error" id="password-error" style="display: none;">*</span>
+                </div>
+                <div class="input-container">
+                    <input type="password" class="input-field" placeholder="Check Password">
+                    <span class="warning" id="check-password-warning" style="display: none;">*</span>
+                </div>
+                <button class="signup-button">Sign up</button>
+                <div class="login-link" onclick="location.href='/interlog/login'">Login</div>
+            </div>
+        </div>
+    </div>
+    <script src="/js/user.js"></script>
+</body>
+</html>

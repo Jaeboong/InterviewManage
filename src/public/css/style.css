@@ -1,0 +1,412 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f5f5f5;  /* 배경색 추가 */
+}
+
+.frame {
+    position: relative;
+    width: 1600px;
+    height: 900px;
+    background: #FFFFFF;
+}
+
+.login-container {
+    position: relative;
+    width: 1600px;
+    height: 900px;
+}
+
+/* 왼쪽 배경 */
+.login-container::before {
+    content: '';
+    position: absolute;
+    width: 558px;
+    height: 900px;
+    left: 0;
+    top: 0;
+    background: #AFF2E1;  /* InterLog 배경색 */
+}
+
+.logo-section {
+    position: absolute;
+    width: 200px;
+    left: calc(50% - 200px/2 - 521px);
+    top: 360px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logo-section h1 {
+    width: 200px;
+    height: 58px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 48px;
+    line-height: 58px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #251B5C;
+}
+
+.underline {
+    width: 313px;
+    height: 5px;
+    background: #37CDAA;
+    margin-top: 10px;  /* position: absolute 제거하고 margin-top 추가 */
+}
+
+.form-section {
+    position: absolute;
+    width: 200px;
+    height: 244px;
+    left: 949px;
+    top: 328px;
+}
+
+.input-field {
+    position: absolute;
+    width: 200px;
+    height: 40px;
+    background: #EEF1F8;
+    border-radius: 25px;
+    border: none;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #000000;
+}
+
+/* ID 필드 위치 */
+.input-field:nth-child(1) {
+    top: 0;
+}
+
+/* Password 필드 위치 */
+.input-field:nth-child(2) {
+    top: 58px;
+}
+
+.login-button {
+    position: absolute;
+    width: 200px;
+    height: 63px;
+    left: 0;
+    top: 145px;
+    background: #37CDAA;
+    border-radius: 15px;
+    border: none;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+    cursor: pointer;
+    transition: all 0.3s ease;  /* 부드러운 전환 효과 */
+}
+
+.login-button:hover {
+    background: #2ba88a;  /* 더 진한 색상 */
+    transform: scale(1.05);  /* 살짝 커지는 효과 */
+}
+
+.login-button:active {
+    transform: scale(0.95);  /* 클릭시 살짝 작아지는 효과 */
+}
+
+.signup-link {
+    position: absolute;
+    width: 56px;
+    height: 18px;
+    left: calc(50% - 56px/2 + 5px);
+    top: 226px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 15px;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #746E98;
+    cursor: pointer;
+    transition: all 0.3s ease;  /* 부드러운 전환 효과 */
+}
+
+.login-link {
+    position: absolute;
+    width: 56px;
+    height: 18px;
+    left: calc(50% - 56px/2 + 5px);
+    top: 700px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 15px;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #746E98;
+    cursor: pointer;
+    transition: all 0.3s ease;  /* 부드러운 전환 효과 */
+}
+
+.signup-link:hover {
+    color: #5a566f;  /* 더 진한 색상 */
+    transform: scale(1.05);  /* 살짝 커지는 효과 */
+}
+
+.signup-link:active {
+    transform: scale(0.95);  /* 클릭시 살짝 작아지는 효과 */
+}
+
+.loginup-link:hover {
+    color: #5a566f;  /* 더 진한 색상 */
+    transform: scale(1.05);  /* 살짝 커지는 효과 */
+}
+
+.login-link:active {
+    transform: scale(0.95);  /* 클릭시 살짝 작아지는 효과 */
+}
+
+/* Signup 페이지 스타일 */
+.frame .overlap-wrapper {
+    background-color: #ffffff;
+    width: 1600px;
+    height: 900px;
+    position: relative;
+}
+
+.frame .overlap {
+    position: relative;
+    width: 1600px;
+    height: 900px;
+}
+
+.frame .text-wrapper {
+    position: absolute;
+    width: 179px;
+    height: 58px;
+    left: calc(50% - 179px/2 + 0.5px);
+    top: 138px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 48px;
+    line-height: 58px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #251B5C;
+}
+
+.frame .rectangle {
+    position: absolute;
+    width: 800px;
+    height: 5px;
+    left: calc(50% - 800px/2);
+    top: calc(50% - 5px/2 - 220.5px);
+    background: #AFF2E1;
+}
+
+.frame .input-field {
+    position: absolute;
+    width: 200px;
+    height: 40px;
+    left: calc(50% - 200px/2);
+    background: #EEF1F8;
+    border-radius: 25px;
+    border: none;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    text-align: center;
+    color: #000000;
+}
+
+/* 각 input-field의 위치 지정 */
+.frame .input-container {
+    position: absolute;
+    width: 200px;
+    left: calc(50% - 200px/2);
+}
+
+/* 각 input-field의 위치 지정 */
+.frame .input-container:nth-child(3) .input-field { top: 250px; }  /* ID */
+.frame .input-container:nth-child(4) .input-field { top: 321px; }  /* Name */
+.frame .input-container:nth-child(5) .input-field { top: 392px; }  /* Email */
+.frame .input-container:nth-child(6) .input-field { top: 463px; }  /* Password */
+.frame .input-container:nth-child(7) .input-field { top: 534px; }  /* Check Password */
+
+/* signup 버튼 위치 조정 */
+.frame .signup-button {
+    position: absolute;
+    width: 315px;
+    height: 63px;
+    left: calc(50% - 315px/2);
+    top: 605px;  /* 버튼 위치도 위로 조정 */
+    background: #37CDAA;
+    border-radius: 15px;
+    border: none;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* placeholder 스타일 */
+.frame .input-field::placeholder {
+    color: #000000;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.frame .input-field:focus::placeholder {
+    opacity: 0;
+}
+
+.frame .input-field:focus {
+    outline: none;
+}
+
+/* 경고 표시 위치 조정 */
+.frame .warning,
+.frame .error {
+    position: absolute;
+    right: -15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* 면접관리 페이지 스타일 */
+.frame {
+    position: relative;
+    width: 1600px;
+    height: 900px;
+    background: #FFFFFF;
+}
+
+/* 디렉토리 헤더 */
+.directory-header {
+    position: absolute;
+    width: 431px;
+    height: 40px;
+    left: 88px;
+    top: 150px;
+    display: flex;
+    align-items: center;
+    z-index: 1;  /* 사각형 위에 표시되도록 */
+}
+
+.folder-icon {
+    width: 30px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+}
+
+.directory-path {
+    margin-left: 10px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 20px;
+    line-height: 24px;
+    color: #000000;
+}
+
+.file-plus-icon {
+    width: 30px;
+    height: 30px;
+    margin-left: auto;  /* 오른쪽 끝으로 밀어냄 */
+    align-items: center;
+}
+
+/* 디렉토리 섹션 (파란 사각형) */
+.directory-section {
+    position: absolute;
+    width: 431px;
+    height: 500px;
+    left: 88px;
+    top: calc(50% - 500px/2);
+    background: #E5EFF8;
+    border: 2px solid #000000;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.directory-text {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 40px;
+    line-height: 48px;
+    color: #000000;
+}
+
+.vertical-line {
+    position: absolute;
+    width: 5px;
+    height: 600px;
+    left: 600px;
+    top: 135px;
+    background: #EEF1F8;
+}
+
+/* 상세 정보 섹션 */
+.details-section {
+    position: absolute;
+    width: 820px;
+    height: 750px;
+    left: 698px;
+    top: 89px;
+    background: #FFFFFF;
+    border: 2px solid #000000;
+    border-radius: 10px;
+}
+
+.details-text {
+    position: absolute;
+    width: 242px;
+    height: 139px;
+    left: 289px;
+    top: 291px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 40px;
+    line-height: 48px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #000000;
+}

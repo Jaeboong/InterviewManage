@@ -1,0 +1,158 @@
+/* 기존 CSS에 추가 */
+
+/* 모달 스타일 */
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}
+
+.modal-content {
+    position: relative;
+    width: 280px;
+    height: 250px;
+    background: #FFFFFF;
+    border: 2px solid #000000;
+    border-radius: 20px;
+}
+
+/* Name 입력 필드 - 왼쪽으로 조정 */
+#interviewTitle {
+    position: absolute;
+    width: 160px;  /* 너비 줄임 */
+    height: 40px;
+    left: 35px;
+    top: 17px;
+    background: #EEF1F8;
+    border-radius: 10px;
+    border: none;
+    font-family: 'Inter';
+    font-size: 20px;
+    text-align: center;
+}
+
+/* X 버튼 추가 */
+.close-button {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    right: 35px;
+    top: 22px;  /* Name 입력 필드와 세로 중앙 맞춤 */
+    background: none;
+    border: none;
+    font-size: 30px;
+    color: #000000;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* X 버튼 호버 효과 */
+.close-button:hover {
+    color: #666;
+}
+
+/* 라디오 버튼 그룹 */
+.scoring-options {
+    position: absolute;
+    left: 35px;
+    top: 76px;
+    width: 210px;
+}
+
+.radio-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.radio-custom {
+    width: 15px;
+    height: 15px;
+    border: 2px solid #000000;
+    border-radius: 50%;
+    margin-right: 11px;
+    background: #FFFFFF;
+}
+
+.radio-container input[type="radio"] {
+    display: none;
+}
+
+.radio-container input[type="radio"]:checked + .radio-custom {
+    background: #000000;
+}
+
+.label-text {
+    font-family: 'Inter';
+    font-size: 20px;
+    color: #000000;
+}
+
+/* Max Score 입력 필드 */
+#maxScore {
+    position: absolute;
+    width: 100px;
+    height: 40px;
+    left: 35px;
+    top: 190px;
+    background: #EEF1F8;
+    border-radius: 10px;
+    border: none;
+    font-family: 'Inter';
+    font-size: 15px;
+    text-align: center;
+}
+
+/* 다음 버튼 */
+.next-button {
+    position: absolute;
+    width: 45px;
+    height: 29px;
+    left: 177px;
+    top: 195px;
+    background: #37CDAA;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.arrow-icon {
+    color: #FFFFFF;
+    font-size: 20px;
+}
+
+/* 파일 추가 아이콘 스타일 */
+.file-plus-icon {
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.file-plus-icon:hover {
+    transform: scale(1.1);
+}
+
+.logout-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background: #37CDAA;
+    border: none;
+    border-radius: 15px;
+    color: white;
+    font-family: 'Inter';
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.logout-button:hover {
+    background: #2fb090;
+}

@@ -1,0 +1,245 @@
+/* 디렉토리 헤더 스타일 */
+.directory-header {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    gap: 8px;
+}
+
+.directory-path {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0 10px;
+    font-family: 'Inter';
+    font-size: 14px;
+}
+
+/* 디렉토리 트리 컨테이너 */
+.directory-tree {
+    padding: 10px;
+    height: calc(100% - 40px);
+    overflow-y: auto;
+}
+
+/* 디렉토리 아이템 스타일 */
+.directory-item {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 2px 0;
+}
+
+.directory-item:hover {
+    background-color: #f0f0f0;
+}
+
+.item-details {
+    display: grid;
+    grid-template-columns: 24px 2fr 1fr 1fr;
+    gap: 10px;
+    width: 100%;
+    align-items: center;
+}
+
+.item-name {
+    font-weight: 500;
+}
+
+.item-date {
+    color: #666666;
+    text-align: center;
+}
+
+.item-type {
+    color: #666666;
+    text-align: right;
+}
+
+/* 폴더 아이콘 */
+.folder-icon {
+    width: 24px;
+    height: 24px;
+}
+
+/* 호버 효과 */
+.directory-item:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+}
+
+/* 파일 추가 아이콘 */
+.file-plus-icon {
+    width: 27px;
+    height: 27px;
+    margin-left: auto;
+    cursor: pointer;
+    margin-right: 8px;
+}
+
+.file-plus-icon:hover {
+    opacity: 0.8;
+}
+
+/* 스크롤바 스타일 */
+.directory-tree::-webkit-scrollbar {
+    width: 8px;
+}
+
+.directory-tree::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.directory-tree::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.directory-tree::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.empty-directory {
+    display: flex;  /* Flexbox 사용 */
+    align-items: left;  /* 세로 중앙 정렬 */
+    color: #666;
+    padding: 4px 8px;
+    margin-left: 12px;  /* 점과 동일한 여백 */
+    text-align: left;  /* 텍스트 왼쪽 정렬 */
+    width: fit-content;  /* 내용물 크기만큼만 차지 */
+}
+
+/* 디렉토리 텍스트 제거 */
+.directory-text {
+    display: none;
+}
+
+/* 아이콘 크기 조정을 위한 스타일 추가 */
+.item-details img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;  /* 이미지 비율 유지 */
+}
+
+.item-details {
+    display: grid;
+    grid-template-columns: 24px 2fr 1fr 1fr;  /* 첫 번째 열을 아이콘 크기에 맞춤 */
+    gap: 10px;
+    width: 100%;
+    align-items: center;
+}
+
+/* 폴더 추가 아이콘 */
+.folder-plus-icon {
+    width: 27px;
+    height: 27px;
+    cursor: pointer;
+    margin-right: 8px;
+}
+
+.folder-plus-icon:hover {
+    opacity: 0.8;
+}
+
+/* 폴더 추가 모달 */
+.modal#folderAddModal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);;
+    z-index: 1000;
+}
+
+.modal#folderAddModal .modal-content {
+    position: relative;
+    width: 280px;
+    height: 150px;
+    background: #FFFFFF;
+    border: 2px solid #000000;
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;  /* 가운데 정렬 */
+}
+
+.modal#folderAddModal input {
+    width: 160px;
+    height: 40px;
+    margin-top: 20px;  /* 상단 여백 추가 */
+    background: #EEF1F8;
+    border-radius: 10px;
+    border: none;
+    font-family: 'Inter';
+    font-size: 20px;
+    text-align: center;
+}
+
+.modal-buttons {
+    margin-top: auto;  /* 하단에 자동 여백 */
+    display: flex;
+    gap: 20px;  /* 버튼 사이 간격 증가 */
+    justify-content: center;  /* 가운데 정렬 */
+}
+
+.create-button, .cancel-button {
+    width: 70px;
+    height: 29px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Inter';
+    font-size: 14px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.create-button {
+    background: #37CDAA;
+}
+
+.cancel-button {
+    background: #6c757d;
+}
+
+.create-button:hover {
+    background: #2fb090;
+}
+
+.cancel-button:hover {
+    background: #5a6268;
+}
+
+/* 상위 폴더로 이동 버튼 스타일 수정 */
+.directory-up {
+    display: flex;
+    align-items: center;
+    padding: 4px 8px;  /* 위아래 여백 줄임 */
+    cursor: pointer;
+    margin: 1px 0;  /* 마진도 줄임 */
+    border-radius: 4px;
+}
+
+.directory-up .item-details {
+    display: flex;
+    justify-content: flex-start;  /* 왼쪽 정렬 */
+    width: 100%;
+    padding: 2px 0;  /* 패딩도 줄임 */
+}
+
+.directory-up .dots {
+    font-size: 18px;  /* 점 크기 줄임 */
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: #666666;
+    margin-left: 12px;  /* 왼쪽 여백 추가 */
+}
+
+.directory-up:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}

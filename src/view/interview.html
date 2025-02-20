@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/createInterview.css" />
+    <link rel="stylesheet" href="/css/directory.css" />
+    <script type="module" src="/js/interview.js"></script>
+
+</head>
+<body>
+    <div class="frame">
+        <!-- 로그아웃 버튼 추가 -->
+        <button class="logout-button">Logout</button>
+
+        <div class="content-container">
+            <!-- 왼쪽 섹션 -->
+            <div class="left-section">
+                <!-- 디렉토리 헤더 -->
+                <div class="directory-header">
+                    <img src="/images/folder.png" class="folder-icon" alt="folder">
+                    <div class="directory-path">/root</div>
+                    <img src="/images/folderadd.png" class="folder-plus-icon" alt="add folder">
+                    <img src="/images/fileadd.png" class="file-plus-icon" alt="add file">
+                </div>
+
+                <!-- 디렉토리 섹션 -->
+                <div class="directory-section">
+                    <div class="directory-tree">
+                        <!-- 상위 폴더로 이동 버튼 -->
+                        <div class="directory-up" style="display: none; visibility: hidden;">
+                            <div class="item-details">
+                                <span class="dots">•••</span>
+                            </div>
+                        </div>
+                        <!-- empty 상태를 위한 div -->
+                        <div class="directory-up" style="display: none;">empty</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 중앙 분리선 -->
+            <div class="vertical-line"></div>
+
+            <!-- 오른쪽 섹션 -->
+            <div class="right-section">
+                <div class="details-section">
+                    <div class="details-text">Interview details</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 파일 추가 모달 -->
+        <div class="modal" id="fileAddModal" style="display: none;">
+            <div class="modal-content">
+                <!-- 제목 입력과 X 버튼 -->
+                <input type="text" id="interviewTitle" placeholder="Name" />
+                <button class="close-button">×</button>
+                
+                <!-- 스코어링 방식 선택 -->
+                <div class="scoring-options">
+                    <label class="radio-container">
+                        <input type="radio" name="scoringType" value="selected">
+                        <span class="radio-custom"></span>
+                        <span class="label-text">Selected Score</span>
+                    </label>
+
+                    <label class="radio-container">
+                        <input type="radio" name="scoringType" value="all">
+                        <span class="radio-custom"></span>
+                        <span class="label-text">All Questions Score</span>
+                    </label>
+
+                    <label class="radio-container">
+                        <input type="radio" name="scoringType" value="total">
+                        <span class="radio-custom"></span>
+                        <span class="label-text">Total Score</span>
+                    </label>
+                </div>
+
+                <!-- Max Score 입력 -->
+                <div class="input-group">
+                    <input type="number" id="maxScore" placeholder="Max Score" disabled />
+                </div>
+
+                <!-- 다음 버튼 -->
+                <button class="next-button">
+                    <span class="arrow-icon">→</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 폴더 추가 모달 추가 -->
+        <div class="modal" id="folderAddModal" style="display: none;">
+            <div class="modal-content">
+                <input type="text" id="folderName" placeholder="폴더 이름" />
+                <div class="modal-buttons">
+                    <button class="create-button">Create</button>
+                    <button class="cancel-button">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

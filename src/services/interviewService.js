@@ -30,52 +30,62 @@ class InterviewService {
         return `${year}. ${month}. ${day} ${ampm} ${hour12}:${minutes}:${seconds}`;
     }
 
-    async createInterview(title, scoringType, maxScore, file) {
-        // 입력값 검증
-        if (!title) {
-            throw new GlobalException('제목을 입력해주세요.', StatusCode.BAD_REQUEST);
+    async createInterview(title, scoringType, maxScore, file, userId, folderId) {
+        try {
+            const workbook = XLSX.read(file.buffer, { type: 'buffer' });
+            const sheetName = workbook.SheetNames[0];
+            const worksheet = workbook.Sheets[sheetName];
+            const data = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+            // 데이터 처리
+            const questions = data[0];  // 첫 번째 행은 질문들
+            const timestamps = data[1];  // 두 번째 행은 타임스탬프
+            const responses = data.slice(2).map(row => ({
+                answers: row
+            }));
+
+            const interviewData = {
+                folderId: folderId || null,
+                userId: userId,
+                title: title,  // 클라이언트에서 받은 title 사용
+                question: questions,  // 엑셀의 첫 번째 행을 question으로 저장
+                response: responses,
+                selectedQuestions: [],
+                rating: null,
+                comments: null,
+                ratingType: scoringType || 0,
+                maxScore: maxScore || 0
+            };
+
+            return await this.interviewRepository.createInterview(interviewData);
+        } catch (error) {
+            console.error('Error in createInterview:', error);
+            throw error;
+        }
+    }
+
+    async deleteInterview(interviewId, userId) {
+        // 인터뷰 존재 여부 및 소유권 확인
+        const interview = await this.interviewRepository.findById(interviewId);
+        
+        if (!interview) {
+            throw new GlobalException('인터뷰를 찾을 수 없습니다.', StatusCode.NOT_FOUND);
+        }
+        
+        if (interview.userId !== userId) {
+            throw new GlobalException('권한이 없습니다.', StatusCode.FORBIDDEN);
         }
 
-        if (scoringType === undefined || scoringType === null) {
-            throw new GlobalException('채점 방식을 선택해주세요.', StatusCode.BAD_REQUEST);
+        // 인터뷰 삭제
+        return await this.interviewRepository.delete(interviewId);
+    }
+
+    async getQuestions(interviewId) {
+        const questions = await this.interviewRepository.getQuestions(interviewId);
+        if (!questions) {
+            throw new GlobalException('질문 목록을 찾을 수 없습니다.', StatusCode.NOT_FOUND);
         }
-
-        if (!maxScore || maxScore <= 0) {
-            throw new GlobalException('최대 점수를 올바르게 입력해주세요.', StatusCode.BAD_REQUEST);
-        }
-
-        if (!file) {
-            throw new GlobalException('파일을 업로드해주세요.', StatusCode.BAD_REQUEST);
-        }
-
-        // 엑셀 파일 파싱
-        const workbook = XLSX.read(file.buffer, { type: 'buffer' });
-        const worksheet = workbook.Sheets[workbook.SheetNames[0]];
-        const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-
-        // 첫 번째 행에서 질문 추출 (A열 제외)
-        const questions = jsonData[0].slice(1);
-
-        // A열에서 타임스탬프 추출 및 변환
-        const timestamps = jsonData.slice(1).map(row => this.excelDateToString(row[0]));
-
-        // 응답 데이터 추출 (A열 제외)
-        const responses = jsonData.slice(1).map(row => ({
-            answers: row.slice(1)
-        }));
-
-        // 데이터 생성
-        const interviewData = {
-            title,
-            ratingType: scoringType,
-            maxScore,
-            question: questions,
-            timestamp: timestamps,
-            response: responses,
-            rating: []  // 초기에는 빈 배열
-        };
-
-        return await this.interviewRepository.createInterview(interviewData);
+        return questions;
     }
 }
 

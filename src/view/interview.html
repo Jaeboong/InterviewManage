@@ -27,14 +27,12 @@
                 <!-- 디렉토리 섹션 -->
                 <div class="directory-section">
                     <div class="directory-tree">
-                        <!-- 상위 폴더로 이동 버튼 -->
-                        <div class="directory-up" style="display: none; visibility: hidden;">
+                        <!-- 테스트 버튼 추가 -->
+                        <div class="directory-up">
                             <div class="item-details">
-                                <span class="dots">•••</span>
+                                <span class="dots">...</span>
                             </div>
                         </div>
-                        <!-- empty 상태를 위한 div -->
-                        <div class="directory-up" style="display: none;">empty</div>
                     </div>
                 </div>
             </div>
@@ -98,6 +96,19 @@
                     <button class="create-button">Create</button>
                     <button class="cancel-button">Cancel</button>
                 </div>
+            </div>
+        </div>
+
+        <!-- 기존 코드 내 적절한 위치에 추가 -->
+        <div class="context-menu" style="display: none;">
+            <div class="menu-item modify">Modify</div>
+            <div class="menu-divider"></div>
+            <div class="menu-item delete">Delete</div>
+        </div>
+
+        <!-- 기존 모달들 아래에 추가 -->
+        <div class="modal" id="questionSelectModal" style="display: none;">
+            <div class="question-select-container">
             </div>
         </div>
     </div>

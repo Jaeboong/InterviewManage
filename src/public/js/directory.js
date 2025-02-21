@@ -43,11 +43,14 @@ const createDirectoryElement = (item) => {
     };
 
     content.innerHTML = `
-        <img src="/images/${item.type === '파일 폴더' ? 'folder.png' : 'file.png'}" alt="${item.type}">
+        <img src="/images/${item.type === '폴더' ? 'folder.png' : 'file.png'}" alt="${item.type}">
         <span class="item-name">${item.name}</span>
         <span class="item-date">${formatDate(item.createdAt)}</span>
         <span class="item-type">${item.type}</span>
     `;
+    
+    // 컨텍스트 메뉴 이벤트 추가
+    element.addEventListener('contextmenu', (e) => handleContextMenu(e, item));
     
     element.appendChild(content);
     return element;
@@ -55,34 +58,35 @@ const createDirectoryElement = (item) => {
 
 const renderDirectoryTree = (items, rootId) => {
     const directorySection = document.querySelector('.directory-tree');
-    const directoryUp = document.querySelector('.directory-up');
     
-    if (!directorySection || !directoryUp) {
+    if (!directorySection) {
         console.error('필요한 DOM 요소를 찾을 수 없습니다.');
         return;
     }
 
     directorySection.innerHTML = '';  // 기존 내용 초기화
-    
-    // root가 아닐 때만 상위 폴더로 가는 버튼 표시
-    if (currentDirectoryId && currentDirectoryId !== rootId) {
-        directoryUp.style.display = 'flex';
-        directoryUp.style.visibility = 'visible';  // 완전히 보이게 설정
-        
-        // 상위 폴더로 이동하는 이벤트 리스너
-        directoryUp.onclick = () => {
-            const currentFolder = items.find(item => item.id === currentDirectoryId);
-            if (currentFolder && currentFolder.parentId) {
-                currentDirectoryId = currentFolder.parentId;
-                renderDirectoryTree(items, rootId);
-                updateDirectoryPath(getDirectoryPath(items, currentDirectoryId));
-            }
-        };
-        
-        directorySection.appendChild(directoryUp);
-    } else {
-        directoryUp.style.display = 'none';
-        directoryUp.style.visibility = 'hidden';  // 완전히 숨김
+
+    // 현재 디렉토리의 정보 찾기
+    const currentDirectory = items.find(item => item.id === currentDirectoryId);
+
+    // parentId가 있을 때만 상위 디렉토리 이동 버튼 생성
+    if (currentDirectory && currentDirectory.parentId) {
+        const upButton = document.createElement('div');
+        upButton.className = 'directory-up';
+        upButton.innerHTML = `
+            <div class="item-details">
+                <span class="dots">...</span>
+            </div>
+        `;
+
+        upButton.addEventListener('click', () => {
+            currentDirectoryId = currentDirectory.parentId;
+            renderDirectoryTree(items);
+            const path = getDirectoryPath(items, currentDirectoryId);
+            updateDirectoryPath(path);
+        });
+
+        directorySection.appendChild(upButton);
     }
 
     console.log('서버에서 받은 아이템들:', items);
@@ -100,9 +104,9 @@ const renderDirectoryTree = (items, rootId) => {
     const currentItems = items.filter(item => item.parentId === currentDirectoryId);
 
     // 폴더와 파일 분리 및 정렬
-    const folders = currentItems.filter(item => item.type === '파일 폴더')
+    const folders = currentItems.filter(item => item.type === '폴더')
         .sort((a, b) => a.name.localeCompare(b.name));
-    const files = currentItems.filter(item => item.type === '텍스트 문서')
+    const files = currentItems.filter(item => item.type === '문서')
         .sort((a, b) => a.name.localeCompare(b.name));
 
     // 폴더 먼저 렌더링
@@ -249,4 +253,116 @@ export const testLog = () => {
     console.log('directory.js의 testLog 함수 실행됨!');
 };
 
-export { loadDirectories, updateDirectoryPath }; 
+// currentDirectoryId를 가져오는 함수
+const getCurrentDirectoryId = () => currentDirectoryId;
+
+// 한 번만 export
+export { loadDirectories, updateDirectoryPath, getCurrentDirectoryId };
+
+// 컨텍스트 메뉴 요소
+const contextMenu = document.querySelector('.context-menu');
+let selectedItem = null;
+
+// 컨텍스트 메뉴 이벤트 처리
+const handleContextMenu = (e, item) => {
+    e.preventDefault();
+    selectedItem = item;  // 선택된 아이템 저장
+    
+    // 컨텍스트 메뉴에 선택된 아이템 ID 저장
+    contextMenu.setAttribute('data-item-id', item.id);
+    
+    contextMenu.style.left = `${e.pageX}px`;
+    contextMenu.style.top = `${e.pageY}px`;
+    contextMenu.style.display = 'block';
+};
+
+// Modify 버튼 클릭 이벤트
+document.querySelector('.menu-item.modify').addEventListener('click', async () => {
+    if (!selectedItem) return;
+
+    if (selectedItem.type === '폴더') {
+        const folderAddModal = document.getElementById('folderAddModal');
+        const folderNameInput = document.getElementById('folderName');
+        folderNameInput.value = selectedItem.name;
+        folderAddModal.style.display = 'flex';
+
+        // 선택된 아이템의 ID를 사용
+        const selectedItemId = selectedItem.id;
+        
+        const createButton = folderAddModal.querySelector('.create-button');
+        const newCreateButtonClone = createButton.cloneNode(true);
+        createButton.parentNode.replaceChild(newCreateButtonClone, createButton);
+
+        newCreateButtonClone.addEventListener('click', async () => {
+            const newName = folderNameInput.value.trim();
+            if (!newName) {
+                alert('폴더 이름을 입력해주세요.');
+                return;
+            }
+
+            const response = await fetch(`/interlog/api/interview/directories/${selectedItemId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                },
+                body: JSON.stringify({ name: newName })
+            });
+
+            if (!response.ok) {
+                const error = await response.json();
+                alert(error.message || '폴더 이름 변경에 실패했습니다.');
+                return;
+            }
+
+            await loadDirectories();
+            folderAddModal.style.display = 'none';
+        });
+    } else {
+        const fileAddModal = document.getElementById('fileAddModal');
+        const titleInput = document.getElementById('interviewTitle');
+        titleInput.value = selectedItem.name;
+        fileAddModal.style.display = 'flex';
+    }
+    closeContextMenu();
+});
+
+// Delete 버튼 클릭 이벤트
+document.querySelector('.menu-item.delete').addEventListener('click', async () => {
+    if (!selectedItem) return;
+
+    if (!confirm('정말 삭제하시겠습니까?')) return;
+
+    const endpoint = selectedItem.type === '폴더' 
+        ? `/interlog/api/interview/directories/${selectedItem.id}`
+        : `/interlog/api/interview/${selectedItem.id}`;
+    
+    const response = await fetch(endpoint, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+    });
+
+    if (!response.ok) {
+        const error = await response.json();
+        alert(error.message || '삭제에 실패했습니다.');
+        return;
+    }
+
+    await loadDirectories();
+    closeContextMenu();
+});
+
+// 컨텍스트 메뉴 닫기
+const closeContextMenu = () => {
+    contextMenu.style.display = 'none';
+    selectedItem = null;
+};
+
+// 문서 클릭 시 컨텍스트 메뉴 닫기
+document.addEventListener('click', (e) => {
+    if (!contextMenu.contains(e.target)) {
+        closeContextMenu();
+    }
+});

@@ -33,12 +33,23 @@ module.exports = (sequelize) => {
       type: DataTypes.JSON,
       allowNull: true
     },
-    ratingType: {
-      type: DataTypes.INTEGER,
-      allowNull: true
+    selectedQuestions: {
+      type: DataTypes.JSON,
+      allowNull: true,
+      defaultValue: null
     },
     rating: {
       type: DataTypes.JSON,
+      allowNull: true,
+      defaultValue: null
+    },
+    comments: {
+      type: DataTypes.JSON,
+      allowNull: true,
+      defaultValue: null
+    },
+    ratingType: {
+      type: DataTypes.INTEGER,
       allowNull: true
     },
     maxScore: {

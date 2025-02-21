@@ -28,4 +28,22 @@ router.post('/directories', authMiddleware, (req, res, next) =>
     directoryController.createDirectory(req, res, next)
 );
 
+// 디렉토리 수정/삭제 라우트
+router.put('/directories/:id', authMiddleware, (req, res, next) =>
+    directoryController.updateDirectory(req, res, next)
+);
+
+router.delete('/directories/:id', authMiddleware, (req, res, next) =>
+    directoryController.deleteDirectory(req, res, next)
+);
+
+// 인터뷰 삭제 라우트 추가
+router.delete('/:id', authMiddleware, (req, res, next) =>
+    interviewController.deleteInterview(req, res, next)
+);
+
+router.get('/:id/questions', authMiddleware, (req, res, next) =>
+    interviewController.getQuestions(req, res, next)
+);
+
 module.exports = router; 

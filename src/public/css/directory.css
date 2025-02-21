@@ -102,16 +102,6 @@
     background: #555;
 }
 
-.empty-directory {
-    display: flex;  /* Flexbox 사용 */
-    align-items: left;  /* 세로 중앙 정렬 */
-    color: #666;
-    padding: 4px 8px;
-    margin-left: 12px;  /* 점과 동일한 여백 */
-    text-align: left;  /* 텍스트 왼쪽 정렬 */
-    width: fit-content;  /* 내용물 크기만큼만 차지 */
-}
-
 /* 디렉토리 텍스트 제거 */
 .directory-text {
     display: none;
@@ -219,27 +209,71 @@
 .directory-up {
     display: flex;
     align-items: center;
-    padding: 4px 8px;  /* 위아래 여백 줄임 */
+    padding: 4px 8px;
     cursor: pointer;
-    margin: 1px 0;  /* 마진도 줄임 */
+    margin: 1px 0;
     border-radius: 4px;
+    flex: 1;
+    min-width: 400px;  /* 최소 너비 추가 */
 }
 
 .directory-up .item-details {
     display: flex;
-    justify-content: flex-start;  /* 왼쪽 정렬 */
+    justify-content: flex-start;
     width: 100%;
-    padding: 2px 0;  /* 패딩도 줄임 */
+    padding: 2px 0;
+    min-width: inherit;  /* 부모의 최소 너비 상속 */
 }
 
 .directory-up .dots {
-    font-size: 18px;  /* 점 크기 줄임 */
+    font-size: 18px;
     font-weight: bold;
     letter-spacing: 2px;
     color: #666666;
-    margin-left: 12px;  /* 왼쪽 여백 추가 */
+    margin-left: 4px;  /* 12px에서 4px로 수정 */
 }
 
 .directory-up:hover {
     background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* 컨텍스트 메뉴 스타일 */
+.context-menu {
+    box-sizing: border-box;
+    position: fixed;
+    width: 125px;
+    height: 50px;
+    background: #FFFFFF;
+    border: 1px solid #000000;
+    border-radius: 10px;
+    z-index: 1000;
+    overflow: hidden;
+}
+
+.menu-item {
+    position: relative;
+    width: 125px;
+    height: 25px;
+    background: #37CDAA;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+.menu-divider {
+    position: relative;
+    width: 125px;
+    height: 1px;
+    background: #000000;
+}
+
+.menu-item:hover {
+    background: #2fb090;
 }

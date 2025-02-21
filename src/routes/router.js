@@ -3,6 +3,7 @@ const router = express.Router();
 const path = require('path');
 const userRoutes = require('./userRoutes');
 const interviewRoutes = require('./interviewRoutes');
+const directoryRoutes = require('./directoryRoutes');
 
 // 페이지 라우팅
 router.get('/signup', (req, res) => {
@@ -19,7 +20,8 @@ router.get('/interview', (req, res) => {
 
 // API 라우터
 router.use('/api/users', userRoutes);
-router.use('/api/interview', interviewRoutes);  // 여기서 interview 관련 모든 라우팅 처리
+router.use('/api/interview', interviewRoutes);
+router.use('/api/directories', directoryRoutes);
 
 // 기본 경로 처리
 router.get('/', (req, res) => {

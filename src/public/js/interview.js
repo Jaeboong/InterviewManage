@@ -1,6 +1,16 @@
 import { ScoreTypes } from './constants/scoreTypes.js';
 import { loadDirectories, updateDirectoryPath, getCurrentDirectoryId } from './directory.js';
 
+// 파일 수정 모드를 위한 변수들
+let isFileModifyMode = false;
+let selectedFileId = null;
+
+// 파일 수정 모드 설정 함수를 최상위 레벨로 이동
+export const setFileModifyMode = (fileId) => {
+    isFileModifyMode = true;
+    selectedFileId = fileId;
+};
+
 document.addEventListener('DOMContentLoaded', function() {
     
     const fileAddIcon = document.querySelector('.file-plus-icon');
@@ -77,14 +87,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // 컨텍스트 메뉴의 modify 클릭 이벤트
-    document.querySelector('.menu-item.modify').addEventListener('click', () => {
-        isModifyMode = true;
-        selectedItemId = getCurrentDirectoryId();
-        folderAddModal.style.display = 'block';
-        updateModalButtons(true);
-    });
-
     // Update/Create 버튼 클릭 이벤트
     createButton.addEventListener('click', async () => {
         const folderName = document.getElementById('folderName').value;
@@ -141,29 +143,50 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 다음 버튼 클릭 이벤트
     if (nextButton) {
-        nextButton.addEventListener('click', () => {
-            // 필수 입력값 체크
+        nextButton.addEventListener('click', async () => {
             const title = document.getElementById('interviewTitle').value;
             if (!title) {
-                alert('제목을 입력해주세요.');
-                return;
+                throw new GlobalException('제목을 입력해주세요.', StatusCode.BAD_REQUEST);
             }
 
-            // 선택된 scoring type 체크
-            const selectedScoring = document.querySelector('input[name="scoringType"]:checked');
-            if (!selectedScoring) {
-                alert('점수 유형을 선택해주세요.');
-                return;
-            }
+            if (isFileModifyMode) {
+                const response = await fetch(`/interlog/api/interview/${selectedFileId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    },
+                    body: JSON.stringify({
+                        title: title,
+                        scoringType: document.querySelector('input[name="scoringType"]:checked')?.value || 'none',
+                        maxScore: document.getElementById('maxScore').value || '0'
+                    })
+                });
 
-            // Selected Score 선택 시 maxScore 필수
-            if (selectedScoring.value === 'selected' && !maxScoreInput.value) {
-                alert('최대 점수를 입력해주세요.');
-                return;
-            }
+                if (!response.ok) {
+                    throw new GlobalException('파일 수정에 실패했습니다.', response.status);
+                }
 
-            // 파일 선택 다이얼로그 표시
-            fileInput.click();
+                const data = await response.json();
+                if (!data.success) {
+                    throw new GlobalException(data.message, StatusCode.BAD_REQUEST);
+                }
+
+                alert('파일이 성공적으로 수정되었습니다.');
+                fileAddModal.style.display = 'none';
+                // 상태 초기화
+                isFileModifyMode = false;
+                selectedFileId = null;
+                // 입력값 초기화
+                document.getElementById('interviewTitle').value = '';
+                document.getElementById('maxScore').value = '';
+                radioInputs.forEach(input => input.checked = false);
+                // 디렉토리 새로고침
+                loadDirectories();
+            } else {
+                // 기존 파일 업로드 로직
+                fileInput.click();
+            }
         });
     }
 

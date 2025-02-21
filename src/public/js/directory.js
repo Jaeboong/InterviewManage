@@ -266,10 +266,11 @@ let selectedItem = null;
 // 컨텍스트 메뉴 이벤트 처리
 const handleContextMenu = (e, item) => {
     e.preventDefault();
-    selectedItem = item;  // 선택된 아이템 저장
+    e.stopPropagation();
+    selectedItem = item;  // 여기서 설정됨
     
-    // 컨텍스트 메뉴에 선택된 아이템 ID 저장
-    contextMenu.setAttribute('data-item-id', item.id);
+    console.log('Selected Item:', selectedItem);  // 로그 추가
+    console.log('Item Type:', selectedItem.type); // 타입 확인
     
     contextMenu.style.left = `${e.pageX}px`;
     contextMenu.style.top = `${e.pageY}px`;
@@ -318,7 +319,7 @@ document.querySelector('.menu-item.modify').addEventListener('click', async () =
             await loadDirectories();
             folderAddModal.style.display = 'none';
         });
-    } else {
+    } else if (selectedItem.type === '문서') {
         const fileAddModal = document.getElementById('fileAddModal');
         const titleInput = document.getElementById('interviewTitle');
         titleInput.value = selectedItem.name;
